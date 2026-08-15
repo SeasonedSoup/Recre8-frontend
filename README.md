@@ -1,1 +1,1 @@
-Frontend for The Odin Book
+Frontend of The Odin Book
