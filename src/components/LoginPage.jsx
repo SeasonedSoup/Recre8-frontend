@@ -1,12 +1,11 @@
+
+
 export function LoginPage() {
-    
-
-
     return (
         <div>
             <div className="registerOptions">
-                <button>Login Via Google</button>
-                <button>Login Via Github</button>
+                <a href="http://localhost:8080/auth/google" >Login Via Google</a>
+                <a href="http://localhost:8080/auth/github">Login Via Github</a>
                 <button>Login Via Username & Password</button>
             </div>
 
