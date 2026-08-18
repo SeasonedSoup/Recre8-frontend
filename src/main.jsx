@@ -1,8 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+
+
+import { AuthProvider } from './utils/AuthProvider'
+
+//components
 import { LoginPage } from './components/LoginPage'
 import { AuthResult } from './components/AuthResult'
+import { Dashboard } from './components/DashBoard'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 
 const router = createBrowserRouter([
@@ -14,11 +20,17 @@ const router = createBrowserRouter([
     path: "/auth-success",
     element: <AuthResult/>
   },
+  {
+    path: "/dashboard",
+    element: <Dashboard/>
+  }
 ])
 createRoot(document.getElementById('root')).render(
 
 
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )

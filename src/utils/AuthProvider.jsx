@@ -9,14 +9,8 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         async function verifyAuth() {
-            const token = localStorage.getItem('token');
 
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const url = getApiUrl("/get-user");
+            const url = getApiUrl("/auth/get-user");
             
             try {
            
@@ -24,21 +18,19 @@ export const AuthProvider = ({children}) => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    }
+                    },
+                    credentials: 'include'
                 })
 
                 if (!response.ok) {
-                    localStorage.removeItem("token");
                     setUser(null);
                     return;
                 }
 
                 const result = await response.json()
+                console.log('result:', result)
                 setUser(result)
-
             } catch (err) {
-
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -46,11 +38,10 @@ export const AuthProvider = ({children}) => {
         } 
 
         verifyAuth()
-        console.log("TOKEN VERIFIED")
+        console.log("VERIFYING TOKEN")
     }, []);
 
-    const login = (user, token) => {
-        localStorage.setItem("token" , token);
+    const login = (user) => {
         setUser(user);
     }
 
