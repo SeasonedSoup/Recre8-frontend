@@ -1,7 +1,11 @@
+import "../styles/Dashboard.css"
+
 import { useAuth } from "./auth/AuthContext"
+import { Header } from "./Header";
+import PostCard from "./PostCard";
 
 export function Dashboard() {
-    const {user, loading, logout} = useAuth();
+    const {user, loading} = useAuth();
 
     if (loading) {
         return <h1>loading...</h1>
@@ -13,10 +17,22 @@ export function Dashboard() {
     }
 
     return (
-        <div>
-            <h1>RECRE8</h1>
-            <h1>{user.username}</h1>
-            <button onClick={logout}>Logout</button>
+        <div className="body">
+            <Header></Header>
+            <h1 className="activePage">Public Feed</h1>
+            <div className="main-content">
+                <PostCard>
+                    <form action="#" method="POST">
+                        <textarea className="post-form"placeholder="Share what your thinking!"></textarea>
+                        <hr />
+                        <button>Post</button>
+                        <button type="button">+</button>
+                    </form>
+                </PostCard>
+                <div className="feed"> 
+                    <h1>HI THIS IS YOUR FEED</h1>
+                </div>
+            </div>
         </div>
     )
 }

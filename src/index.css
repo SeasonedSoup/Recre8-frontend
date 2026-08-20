@@ -1,9 +1,16 @@
 html, body {
   height: 100vh;
+  word-wrap: 100vw;
 }
 
 #root {
   height: 100%;
+  width: 100%;
+  background-color: #f6f6fb
+}
+
+button {
+  cursor: pointer;
 }
 
 /* 1. Use a more-intuitive box-sizing model */
