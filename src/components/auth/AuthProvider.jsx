@@ -1,5 +1,5 @@
 import { useEffect, useState} from "react";
-import getApiUrl from "./getApiUrl";
+import getApiUrl from "../../utils/getApiUrl"
 import { AuthContext } from "./AuthContext";
 
 
@@ -45,8 +45,19 @@ export const AuthProvider = ({children}) => {
         setUser(user);
     }
 
-    const logout = () => {
-        localStorage.removeItem("token");
+    const logout = async() => {
+        try {
+            const url = getApiUrl('/auth/logout')
+
+            const response = await fetch(url, {
+                method: "POST",
+                credentials: "include"
+            })
+
+            console.log(response)
+        } catch (err) {
+            console.error(err)
+        }
         setUser(null)
     }
 

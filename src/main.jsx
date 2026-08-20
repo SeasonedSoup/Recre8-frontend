@@ -2,9 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 
-
-import { AuthProvider } from './utils/AuthProvider'
-
+import { AuthProvider } from './components/auth/AuthProvider'
 //components
 import { LoginPage } from './components/LoginPage'
 import { AuthResult } from './components/AuthResult'
