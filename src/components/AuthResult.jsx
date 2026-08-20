@@ -10,7 +10,7 @@ export function AuthResult() {
         }, 1000)
 
         if (seconds === 0) {
-            navigate('/dashboard');
+            navigate('/dashboard', {replace: true});
         }
 
         return () => clearTimeout(timeOutId);
