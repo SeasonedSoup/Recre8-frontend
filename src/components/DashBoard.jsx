@@ -14,7 +14,7 @@ export function Dashboard() {
 
     return (
         <div>
-            <h1>DASHBOARD</h1>
+            <h1>RECRE8</h1>
             <h1>{user.username}</h1>
             <button onClick={logout}>Logout</button>
         </div>
