@@ -3,7 +3,10 @@ import "../styles/Dashboard.css"
 
 import { useAuth } from "./auth/AuthContext"
 import { Header } from "./Header";
-import PostCard from "./PostCard";
+
+import { Profile } from "./Profile";
+import { FeedPage } from "./FeedPage";
+import { UserList } from "./UserList";
 
 export function Dashboard() {
     const {user, loading} = useAuth();
@@ -17,6 +20,21 @@ export function Dashboard() {
         return <div>Access Denied Pls Log In</div>
     }
 
+    function PageLoader(page) {
+        switch (page) {
+            case "Public Feed":
+            case "My Feed":
+                return <FeedPage/>
+            case "Profile":
+                return <Profile/>
+            case "Confidants":
+            case "Users":
+                return <UserList/>
+            default:
+                return <h1>Unknown page</h1>
+        }
+    }
+
 
 
     return (
@@ -24,17 +42,7 @@ export function Dashboard() {
             <Header setActivePage={setActivePage}></Header>
             <h1 className="activePage">{activePage}</h1>
             <div className="main-content">
-                <PostCard>
-                    <form action="#" method="POST">
-                        <textarea className="post-form"placeholder="Share what your thinking!"></textarea>
-                        <hr />
-                        <button>Post</button>
-                        <button type="button">+</button>
-                    </form>
-                </PostCard>
-                <div className="feed"> 
-                    <h1>HI THIS IS YOUR FEED</h1>
-                </div>
+               {PageLoader(activePage)}
             </div>
         </div>
     )
