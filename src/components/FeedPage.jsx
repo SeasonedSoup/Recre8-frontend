@@ -1,6 +1,10 @@
 import PostCard from "./PostCard"
 
 export function FeedPage() {
+    //fetching posts from either latest in global or friends only
+    const fetchPosts = () => {
+
+    }
     return (
         <div className="feedPage" style={{all: "inherit", width: "100%"}}>
              <PostCard>
