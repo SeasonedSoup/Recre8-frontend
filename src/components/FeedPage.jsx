@@ -1,9 +1,13 @@
+import { useState } from "react"
 import PostCard from "./PostCard"
 
 export function FeedPage() {
     //fetching posts from either latest in global or friends only
-    const fetchPosts = () => {
+    const [feeds, setFeeds] = useState([]);
 
+    const fetchPosts = () => {
+        const currentFeeds = []
+        setFeeds(currentFeeds)
     }
     return (
         <div className="feedPage" style={{all: "inherit", width: "100%"}}>
@@ -16,7 +20,9 @@ export function FeedPage() {
                 </form>
             </PostCard>
             <div className="feed"> 
-                <h1>HI THIS IS YOUR FEED</h1>
+                {feeds.map((feed) => {
+
+                })}
             </div>
         </div>
     )
