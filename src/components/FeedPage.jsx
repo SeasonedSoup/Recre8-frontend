@@ -1,12 +1,20 @@
 import { useState } from "react"
+import getApiUrl from "../utils/getApiUrl";
+
 import PostCard from "./PostCard"
 
 export function FeedPage() {
     //fetching posts from either latest in global or friends only
     const [feeds, setFeeds] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const fetchPosts = () => {
-        const currentFeeds = []
+
+    const fetchPosts = async() => {
+        const url = getApiUrl("/posts")
+
+        const currentFeeds = await fetch(url, {
+
+        })
         setFeeds(currentFeeds)
     }
     return (

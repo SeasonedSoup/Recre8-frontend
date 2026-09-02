@@ -5,8 +5,8 @@ function PostPage() {
     
     return (
         <div>
-            <div>
-                
+            <div className="">
+
             </div>
             <h1>Comment Section: </h1>
             <div className="comments"></div>
