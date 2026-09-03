@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import getApiUrl from "../utils/getApiUrl";
 
 import PostCard from "./PostCard"
@@ -9,14 +9,44 @@ export function FeedPage() {
     const [loading, setLoading] = useState(true);
 
 
-    const fetchPosts = async() => {
-        const url = getApiUrl("/posts")
 
-        const currentFeeds = await fetch(url, {
 
-        })
-        setFeeds(currentFeeds)
-    }
+    useEffect(() => {
+        const fetchPosts = async() => {
+            setLoading(true);
+
+            try {
+                 const url = getApiUrl("/posts")
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers : {
+                    "Accept": "application/json"
+                }
+            })
+            
+            if (!response.ok) {
+                throw new Error("Http Errror: ", response.status)
+            }
+
+            const currentFeeds = await response.json();
+
+            setFeeds(currentFeeds)
+            } catch (err) {
+                console.error("Posts fetch failed", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+        fetchPosts();
+    }, []);
+
+    if (loading)
+        return (
+            <h1>Loading</h1>
+        )
+
     return (
         <div className="feedPage" style={{all: "inherit", width: "100%"}}>
              <PostCard>
@@ -28,9 +58,11 @@ export function FeedPage() {
                 </form>
             </PostCard>
             <div className="feed"> 
-                {feeds.map((feed) => {
-
-                })}
+                {feeds.map((feed) => (
+                    <div key={feed.id}>
+                        {feed.title}
+                    </div>
+                ))}
             </div>
         </div>
     )
