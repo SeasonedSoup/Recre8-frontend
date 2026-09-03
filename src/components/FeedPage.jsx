@@ -8,9 +8,6 @@ export function FeedPage() {
     const [feeds, setFeeds] = useState([]);
     const [loading, setLoading] = useState(true);
 
-
-
-
     useEffect(() => {
         const fetchPosts = async() => {
             setLoading(true);
@@ -26,7 +23,7 @@ export function FeedPage() {
             })
             
             if (!response.ok) {
-                throw new Error("Http Errror: ", response.status)
+                throw new Error(`Http Error: ${response.status}`)
             }
 
             const currentFeeds = await response.json();

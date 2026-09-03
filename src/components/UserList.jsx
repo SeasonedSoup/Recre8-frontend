@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react"
+
 export function UserList() {
     //fetch either friends or all existing users 
     const fetchUsers = () => {
-
+        
     }
 
     // adding a confidant
