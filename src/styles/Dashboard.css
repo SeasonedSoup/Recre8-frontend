@@ -1,3 +1,5 @@
+/* MAIN CONTENT */
+
 .app, .body {
     height: 100%;
 }
@@ -32,4 +34,19 @@ textarea {
 
 textarea:focus {
     outline: 2px solid rgb(167, 228, 255);
+}
+
+/*////////// PAGES ///////////*/
+
+/* UsersPage */
+
+.userRow {
+    display: flex;
+    gap: 2em;
+}
+
+.profilePicture {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
 }

@@ -27,15 +27,13 @@ export function FeedPage() {
             }
 
             const currentFeeds = await response.json();
-
-            setFeeds(currentFeeds)
+            setFeeds(currentFeeds);
             } catch (err) {
                 console.error("Posts fetch failed", err);
             } finally {
                 setLoading(false);
             }
         }
-        
         fetchPosts();
     }, []);
 
