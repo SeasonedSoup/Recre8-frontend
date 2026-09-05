@@ -54,8 +54,14 @@ export function FeedPage() {
             </PostCard>
             <div className="feed"> 
                 {feeds.map((feed) => (
-                    <div key={feed.id}>
-                        {feed.title}
+                    <div className="feedCard" key={feed.id}>
+                        <h3>Author: {feed.author.username} {feed.title}</h3>
+                        <h6>{feed.content}</h6>
+                        <div>
+                            <button>Like</button>
+                            <button>Comment</button>
+                            <button>View</button>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -37,17 +37,63 @@ export function UserList() {
     }, [])
 
     // adding a confidant
-    const addFriend = () => {
+    const addFriend = async(friendId) => {
+        const url = getApiUrl('/friend/add');
 
+        const response = await fetch(url, {
+            method: 'POST',
+            headers : {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({friendId}),
+            credentials: true
+        })
+
+
+        if (!response.ok) {
+            console.error("HTTP ERROR", response.status)
+        }
+
+        const result = await response.json()
+        console.log(result)
     }
 
     // accepting an existing request for the user
-    const acceptReq = () => {
+    const acceptReq = async(friendId) => {
+        const url = getApiUrl('/friend/accept');
 
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers : {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({friendId}),
+            credentials: true
+        })
+
+
+        if (!response.ok) {
+            console.error("HTTP ERROR", response.status)
+        }
+
+        const result = await response.json()
+        console.log(result)
     }
 
-    const removeFriend = () => {
-        
+    const removeReqOrFriend = async(friendId) => {
+        const url = getApiUrl(`/friend/delete/${friendId}`);
+
+        const response = await fetch(url, {
+            method: 'DELETE',
+            credentials: true
+        })
+
+        if (!response.ok) {
+            console.error("HTTP ERROR", response.status)
+        }
+
+        const result = await response.json()
+        console.log(result)
     }
     if (loading) {
         return <div>Loading...</div>
