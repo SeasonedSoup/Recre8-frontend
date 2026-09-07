@@ -6,6 +6,31 @@ export function UserList() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
+
+    const fetchFriends = async() => {
+        try {
+            const url = getApiUrl("/friend/friends");
+
+            const response = await fetch(url, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Accept": "application/json"
+                }
+            })
+
+            if (!response.ok) {
+                throw new Error(`HTTP ERROR ${response.status}`);
+            }
+
+            const friends = await response.json();
+            setUsers(friends);
+        } catch (err) {
+            console.error("Error", err)
+        } finally {
+            setLoading(true)
+        }
+    }
     //fetch either friends or all existing users 
     useEffect(() => {
         const fetchUsers = async() => {
@@ -46,7 +71,7 @@ export function UserList() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({friendId}),
-            credentials: true
+            credentials: "include"
         })
 
 
@@ -107,7 +132,9 @@ export function UserList() {
                     <div key={user.id} className="userRow">
                         <img className="profilePicture" src={user.avatar || defaultAvatar}></img>
                         {user.username}
-                        <button>Add Friend</button>
+                        <button onClick={() => addFriend(user.id)}>Add Friend</button>
+                        <button onClick={() => removeReqOrFriend(user.id)}>Unfriend</button>
+                        <button onClick={() => acceptReq(user.id)}>Accept Friend</button>
                     </div>
                 ))}
             </div>

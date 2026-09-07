@@ -8,6 +8,10 @@ export function FeedPage() {
     const [feeds, setFeeds] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    //title contents and images 
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+
     useEffect(() => {
         const fetchPosts = async() => {
             setLoading(true);
@@ -37,6 +41,25 @@ export function FeedPage() {
         fetchPosts();
     }, []);
 
+
+    const createPost = async(e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+
+
+        const url = getApiUrl("/create-post");
+
+        const response = await fetch(url, {
+            method: "POST", 
+            credentials: "include",
+            body: formData
+
+        })
+    }
+
     if (loading)
         return (
             <h1>Loading</h1>
@@ -45,8 +68,10 @@ export function FeedPage() {
     return (
         <div className="feedPage" style={{all: "inherit", width: "100%"}}>
              <PostCard>
-                <form action="#" method="POST">
-                    <textarea className="post-form"placeholder="Share what your thinking!"></textarea>
+                <form onSubmit={createPost} method="POST">
+                    <label htmlFor="title">Title: </label>
+                    <input type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                    <textarea className="post-form"placeholder="Share what your thinking!" value={content} onChange={(e) => setContent(e.target.value)}></textarea>
                     <hr />
                     <button>Post</button>
                     <button type="button">+</button>
