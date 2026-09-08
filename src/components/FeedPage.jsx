@@ -45,6 +45,7 @@ export function FeedPage() {
     const createPost = async(e) => {
         e.preventDefault();
 
+        try {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
@@ -56,8 +57,14 @@ export function FeedPage() {
             method: "POST", 
             credentials: "include",
             body: formData
-
         })
+
+        if (!response.ok) {
+            throw new Error(`Http Error: ${response.status}`)
+        }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     if (loading)
