@@ -93,7 +93,7 @@ export function UserList() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({friendId}),
-            credentials: true
+            credentials: "include"
         })
 
 
@@ -110,7 +110,7 @@ export function UserList() {
 
         const response = await fetch(url, {
             method: 'DELETE',
-            credentials: true
+            credentials: "include"
         })
 
         if (!response.ok) {
