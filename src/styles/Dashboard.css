@@ -53,7 +53,20 @@ textarea:focus {
 
 /* Feed Page */
 
+.feedPage {
+  display: flex;
+}
+
 .feedCard {
     display: flex;
     flex-direction: column;
+}
+
+.feedContainer {
+  display: flex;
+  flex-direction:  column;
+}
+
+.activePost {
+  flex-shrink: 8;
 }
