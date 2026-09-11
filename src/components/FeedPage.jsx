@@ -34,6 +34,7 @@ export function FeedPage() {
 
         const currentFeeds = await response.json();
         setFeeds(currentFeeds);
+        console.log(currentFeeds);
       } catch (err) {
         console.error("Posts fetch failed", err);
       } finally {
