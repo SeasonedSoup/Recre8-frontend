@@ -2,142 +2,145 @@ import { useState, useEffect } from "react"
 import getApiUrl from "../utils/getApiUrl"
 import defaultAvatar from "../assets/user-default.png"
 
-export function UserList() {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
+export function UserList({ which }) {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-
-    const fetchFriends = async() => {
-        try {
-            const url = getApiUrl("/friend/friends");
-
-            const response = await fetch(url, {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Accept": "application/json"
-                }
-            })
-
-            if (!response.ok) {
-                throw new Error(`HTTP ERROR ${response.status}`);
-            }
-
-            const friends = await response.json();
-            setUsers(friends);
-        } catch (err) {
-            console.error("Error", err)
-        } finally {
-            setLoading(true)
-        }
-    }
-    //fetch either friends or all existing users 
-    useEffect(() => {
-        const fetchUsers = async() => {
-            try {
-                const url = getApiUrl("/auth/users");
-
-                const response = await fetch(url, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/json"
-                    },
-                    credentials: "include"
-                })
-
-                if (!response.ok) {
-                throw new Error(`HTTP ERROR ${response.status}`);
-                }
-
-                const usersData = await response.json();
-                setUsers(usersData)
-            } catch (error) {
-                console.error("Error: ", error);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchUsers();
-    }, [])
-
-    // adding a confidant
-    const addFriend = async(friendId) => {
-        const url = getApiUrl('/friend/add');
+  //fetch either friends or all existing users 
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const url = getApiUrl("/friend/friends");
 
         const response = await fetch(url, {
-            method: 'POST',
-            headers : {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({friendId}),
-            credentials: "include"
-        })
-
-
-        if (!response.ok) {
-            console.error("HTTP ERROR", response.status)
-        }
-
-        const result = await response.json()
-        console.log(result)
-    }
-
-    // accepting an existing request for the user
-    const acceptReq = async(friendId) => {
-        const url = getApiUrl('/friend/accept');
-
-        const response = await fetch(url, {
-            method: 'PATCH',
-            headers : {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({friendId}),
-            credentials: "include"
-        })
-
-
-        if (!response.ok) {
-            console.error("HTTP ERROR", response.status)
-        }
-
-        const result = await response.json()
-        console.log(result)
-    }
-
-    const removeReqOrFriend = async(friendId) => {
-        const url = getApiUrl(`/friend/delete/${friendId}`);
-
-        const response = await fetch(url, {
-            method: 'DELETE',
-            credentials: "include"
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Accept": "application/json"
+          }
         })
 
         if (!response.ok) {
-            console.error("HTTP ERROR", response.status)
+          throw new Error(`HTTP ERROR ${response.status}`);
         }
 
-        const result = await response.json()
-        console.log(result)
-    }
-    if (loading) {
-        return <div>Loading...</div>
+        const friends = await response.json();
+        setUsers(friends);
+      } catch (err) {
+        console.error("Error", err)
+      } finally {
+        setLoading(false)
+      }
     }
 
-    return (
-        <>
-            <button>Requests</button>
-            <div className="userList">
-                {users.map(user => (
-                    <div key={user.id} className="userRow">
-                        <img className="profilePicture" src={user.avatar || defaultAvatar}></img>
-                        {user.username}
-                        <button onClick={() => addFriend(user.id)}>Add Friend</button>
-                        <button onClick={() => removeReqOrFriend(user.id)}>Unfriend</button>
-                        <button onClick={() => acceptReq(user.id)}>Accept Friend</button>
-                    </div>
-                ))}
-            </div>
-        </>
-    )
+    const fetchUsers = async () => {
+      try {
+        const url = getApiUrl("/auth/users");
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Accept": "application/json"
+          },
+          credentials: "include"
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP ERROR ${response.status}`);
+        }
+
+        const usersData = await response.json();
+        setUsers(usersData)
+      } catch (error) {
+        console.error("Error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    if (which === "friends") {
+      fetchFriends();
+    } else {
+      fetchUsers();
+    }
+  }, [which])
+
+  // adding a confidant
+  const addFriend = async (friendId) => {
+    const url = getApiUrl('/friend/add');
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ friendId }),
+      credentials: "include"
+    })
+
+
+    if (!response.ok) {
+      console.error("HTTP ERROR", response.status)
+    }
+
+    const result = await response.json()
+    console.log(result)
+  }
+
+  // accepting an existing request for the user
+  const acceptReq = async (friendId) => {
+    const url = getApiUrl('/friend/accept');
+
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ friendId }),
+      credentials: "include"
+    })
+
+
+    if (!response.ok) {
+      console.error("HTTP ERROR", response.status)
+    }
+
+    const result = await response.json()
+    console.log(result)
+  }
+
+  const removeReqOrFriend = async (friendId) => {
+    const url = getApiUrl(`/friend/delete/${friendId}`);
+
+    const response = await fetch(url, {
+      method: 'DELETE',
+      credentials: "include"
+    })
+
+    if (!response.ok) {
+      console.error("HTTP ERROR", response.status)
+    }
+
+    const result = await response.json()
+    console.log(result)
+  }
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <>
+      <button>Requests</button>
+      <div className="userList">
+        {users.map(user => (
+          <div key={user.id} className="userRow">
+            <img className="profilePicture" src={user.avatar || defaultAvatar}></img>
+            {user.username}
+            <button onClick={() => addFriend(user.id)}>Add Friend</button>
+            <button onClick={() => removeReqOrFriend(user.id)}>Unfriend</button>
+            <button onClick={() => acceptReq(user.id)}>Accept Friend</button>
+          </div>
+        ))}
+      </div>
+    </>
+  )
 }
