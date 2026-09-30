@@ -4,6 +4,9 @@ import getApiUrl from "../utils/getApiUrl";
 import PostCard from "./PostCard"
 import PostPage from "./PostPage"
 export function FeedPage() {
+
+  const [files, setFiles] = useState([]);
+
   //fetching posts from either latest in global or friends only
   const [feeds, setFeeds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,6 +75,18 @@ export function FeedPage() {
       setContent("");
     }
   }
+  //to do from supabase
+  const onFileChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (files.length > 3) {
+      alert("Only three files at max");
+      return;
+    }
+
+    setFiles(files)
+
+  }
 
   const viewActivePost = async (post) => {
     setActivePost(post);
@@ -92,7 +107,7 @@ export function FeedPage() {
             <textarea className="post-form" placeholder="Share what your thinking!" value={content} onChange={(e) => setContent(e.target.value)}></textarea>
             <hr />
             <button>Post</button>
-            <button type="button">+</button>
+            <input type="file" multiple onChange={onFileChange}></input>
           </form>
         </PostCard>
         <div className="feed">
