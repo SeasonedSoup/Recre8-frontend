@@ -1,9 +1,8 @@
 //contains the comments and stuff ig
 import getApiUrl from "../utils/getApiUrl"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function PostPage({ post }) {
-  const [comments, setComments] = useState(post.comments);
   const [comment, setComment] = useState("");
 
   async function toggleLikePost() {
@@ -81,7 +80,7 @@ function PostPage({ post }) {
       </form>
       <h1>Comment Section: </h1>
       <div className="comments">
-        {comments.map((comment) => (
+        {post.comments.map((comment) => (
           <div key={comment.id}>
             <img src={comment.commenter.avatar} alt=""></img>
             <h5>{comment.commenter.username}</h5>
