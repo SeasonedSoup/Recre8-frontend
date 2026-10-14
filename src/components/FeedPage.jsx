@@ -56,7 +56,11 @@ export function FeedPage() {
       formData.append('title', title);
       formData.append('content', content);
 
-
+      if (files && files.length > 0) {
+        files.forEach((file) => {
+          formData.append("photos", file);
+        })
+      }
       const url = getApiUrl("/create-post");
 
       const response = await fetch(url, {
@@ -81,6 +85,7 @@ export function FeedPage() {
 
     if (files.length > 3) {
       alert("Only three files at max");
+      e.target.value = "";
       return;
     }
 
