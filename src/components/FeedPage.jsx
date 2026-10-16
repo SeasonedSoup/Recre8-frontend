@@ -83,7 +83,7 @@ export function FeedPage() {
   const onFileChange = (e) => {
     const files = Array.from(e.target.files);
 
-    if (files.length > 3) {
+    if (!files || files.length > 3) {
       alert("Only three files at max");
       e.target.value = "";
       return;
