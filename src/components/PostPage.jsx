@@ -74,6 +74,19 @@ function PostPage({ post }) {
       <button onClick={toggleLikePost}>Like Post</button>
       <h1>{post.title}</h1>
       <h2>{post.content}</h2>
+      {post.postImages?.length > 0 && (
+        <>
+          <h2>Photos</h2>
+          {post.postImages?.map((postImage) => (
+            <img
+              key={postImage.id}
+              src={postImage.url}
+              alt="Post photo"
+            />
+          ))}
+        </>
+
+      )}
       <form onSubmit={commentOnPost} className="comment">
         <textarea placeholder="Share your thoughts!" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
         <button>Comment</button>
