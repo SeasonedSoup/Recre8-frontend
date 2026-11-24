@@ -3,7 +3,7 @@ import getApiUrl from "../utils/getApiUrl";
 
 import PostCard from "./PostCard"
 import PostPage from "./PostPage"
-export function FeedPage() {
+export function FeedPage({ type }) {
 
   const [files, setFiles] = useState([]);
 
@@ -20,15 +20,25 @@ export function FeedPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
+      let path = ""
+      switch (type) {
+        case "Public":
+          path = "/posts";
+          break;
+        case "Friends":
+          path = "/friend-posts";
+          break;
+      }
 
       try {
-        const url = getApiUrl("/posts")
+        const url = getApiUrl(path)
 
         const response = await fetch(url, {
           method: "GET",
           headers: {
             "Accept": "application/json"
-          }
+          },
+          credentials: 'include'
         })
 
         if (!response.ok) {
@@ -36,6 +46,7 @@ export function FeedPage() {
         }
 
         const currentFeeds = await response.json();
+
         setFeeds(currentFeeds);
         console.log(currentFeeds);
       } catch (err) {
@@ -45,7 +56,7 @@ export function FeedPage() {
       }
     }
     fetchPosts();
-  }, []);
+  }, [type]);
 
 
   const createPost = async (e) => {

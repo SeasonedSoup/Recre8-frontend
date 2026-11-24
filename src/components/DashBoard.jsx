@@ -23,8 +23,9 @@ export function Dashboard() {
   function PageLoader(page) {
     switch (page) {
       case "Public Feed":
+        return <FeedPage type="Public" />
       case "My Feed":
-        return <FeedPage />
+        return <FeedPage type="Friends" />
       case "Profile":
         return <Profile />
       case "Confidants":
